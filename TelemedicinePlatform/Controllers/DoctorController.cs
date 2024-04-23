@@ -28,7 +28,7 @@ namespace TelemedicinePlatform.Controllers
                 await _context.SaveChangesAsync();
 
                 response.StatusCode = (int)HttpStatusCode.OK;
-                response.Message = "brand data  save Successfully";
+                response.Message = "Doctor's data  save Successfully";
                 return response;
             }
             catch (Exception ex)
