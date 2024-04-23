@@ -22,6 +22,7 @@ namespace TelemedicinePlatform.Controllers
         public async Task<ActionResult<ApiResponse>> Save(Doctor model)
         {
             var response =new ApiResponse();
+            
             try
             {
                 await _context.Doctors.AddAsync(model);
@@ -39,6 +40,8 @@ namespace TelemedicinePlatform.Controllers
                 response.IsError = true;
                 return response;
             }
+            
+           
 
         }
     }
