@@ -42,5 +42,57 @@ namespace TelemedicinePlatform.Controllers
             }
             
         }
+        [HttpGet]
+        public async Task<ActionResult<ApiResponse>> GetDoctors()
+        {
+            var response = new ApiResponse();
+            try
+            {
+                var doctorQuery = _context.Doctors.AsQueryable();
+
+                var doctor = await doctorQuery.ToListAsync();
+                response.Result = doctor;
+                response.StatusCode = (int)HttpStatusCode.OK;
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                response.Result = null;
+                response.StatusCode = (int)HttpStatusCode.BadRequest;
+                response.ResponseException = ex.Message;
+                response.IsError = true;
+                return response;
+            }
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApiResponse>>GetDoctor(int id)
+        {
+            var response= new ApiResponse();
+            try
+            {
+                var doctor = await _context.Doctors.FirstOrDefaultAsync(x => x.DoctorId == id);
+                if(doctor == null)
+                {
+                    response.Message = "Doctor not  found";
+                    response.IsError = true;
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                    return response;
+                }
+                response.Result = doctor;
+                response.Message = "Doctor Data  found";
+                response.StatusCode = (int)HttpStatusCode.OK;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Result = null;
+                response.StatusCode = (int)HttpStatusCode.BadRequest;
+                response.ResponseException = ex.Message;
+                response.IsError = true;
+                return response;
+            }
+
+        }
     }
 }
