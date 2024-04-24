@@ -94,5 +94,77 @@ namespace TelemedicinePlatform.Controllers
             }
 
         }
+
+        [HttpPut]
+        public async Task<ActionResult<ApiResponse>> PutDoctor(Doctor model)
+        {
+            var response = new ApiResponse();
+            try
+            {
+                var dbModel = await _context.Doctors.FirstOrDefaultAsync(x => x.DoctorId == model.DoctorId);
+                if (dbModel == null)
+                {
+                    response.Message = "Doctor data not found";
+                    response.IsError = true;
+                    return response;
+                }
+                dbModel.Name = model.Name;
+                dbModel.DateOfBirth = model.DateOfBirth;
+                dbModel.Name = model.Name;
+                dbModel.Phone = model.Phone;
+                dbModel.Email = model.Email;
+                dbModel.Address = model.Address;
+                dbModel.Name = model.Name;
+                dbModel.ProfilePicture = model.ProfilePicture;
+                dbModel.UserName = model.UserName;
+                dbModel.Password = model.Password;
+                _context.Doctors.Update(dbModel);
+                await _context.SaveChangesAsync();
+                response.StatusCode = (int)HttpStatusCode.OK;
+                response.Message = "Doctor Data Updated";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.IsError = true;
+                return response;
+
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ApiResponse>>DeleteDoctor(int id)
+        {
+           var response= new ApiResponse();
+            if (_context.Doctors == null)
+            {
+                response.Message = "No Item Available";
+                response.IsError = true;
+                return response;
+            }
+            try
+            {
+                var doctor = await _context.Doctors.FindAsync(id);
+                if(doctor == null)
+                {
+                    response.Message = "Doctor data is not found";
+                    response.IsError = true;
+                    return response;
+                }
+                _context.Doctors.Remove(doctor);
+                response.Message = "Doctor Data Remove";
+                await _context.SaveChangesAsync();
+                response.StatusCode = (int)HttpStatusCode.OK;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.IsError = true;
+                return response;
+            }
+
+        }
     }
 }
