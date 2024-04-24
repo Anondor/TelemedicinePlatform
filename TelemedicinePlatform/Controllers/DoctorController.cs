@@ -41,8 +41,6 @@ namespace TelemedicinePlatform.Controllers
                 return response;
             }
             
-           
-
         }
     }
 }
