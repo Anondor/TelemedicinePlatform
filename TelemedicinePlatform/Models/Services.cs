@@ -7,6 +7,7 @@ namespace TelemedicinePlatform.Models
     public class Services
     {
         [Key]
+        public int ServiceId { get; set; }
         public int PaymentId { get; set; }
         public int AppointmentId { get; set; }
         public int PatientId { get; set; }
@@ -15,7 +16,6 @@ namespace TelemedicinePlatform.Models
         public string processBy { get; set; }
         public int Status { get; set; }
         public int Amount { get; set; }
-        public int ServiceId { get; set; }
         public int DoctorId { get; set; }
     }
 }

@@ -207,11 +207,11 @@ namespace TelemedicinePlatform.Migrations
 
             modelBuilder.Entity("TelemedicinePlatform.Models.Services", b =>
                 {
-                    b.Property<int>("PaymentId")
+                    b.Property<int>("ServiceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"), 1L, 1);
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -225,6 +225,9 @@ namespace TelemedicinePlatform.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
+                    b.Property<int>("PaymentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProofOfPayment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -233,9 +236,6 @@ namespace TelemedicinePlatform.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -243,7 +243,7 @@ namespace TelemedicinePlatform.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PaymentId");
+                    b.HasKey("ServiceId");
 
                     b.ToTable("Services");
                 });

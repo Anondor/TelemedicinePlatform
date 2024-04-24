@@ -2,34 +2,33 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TelemedicinePlatform.Models;
 using System.Net;
-
+using TelemedicinePlatform.Models;
 
 namespace TelemedicinePlatform.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DoctorController : ControllerBase
+    public class PatientController : ControllerBase
     {
         private readonly APIDbContext _context;
 
-        public DoctorController(APIDbContext context)
+        public PatientController(APIDbContext context)
         {
             _context = context;
         }
         [HttpPost]
-        public async Task<ActionResult<ApiResponse>> Save(Doctor model)
+        public async Task<ActionResult<ApiResponse>> Save(Patient model)
         {
-            var response =new ApiResponse();
-            
+            var response = new ApiResponse();
+
             try
             {
-                await _context.Doctors.AddAsync(model);
+                await _context.Patients.AddAsync(model);
                 await _context.SaveChangesAsync();
 
                 response.StatusCode = (int)HttpStatusCode.OK;
-                response.Message = "Doctor's data  save Successfully";
+                response.Message = "Patient's data  save Successfully";
                 return response;
             }
             catch (Exception ex)
@@ -40,17 +39,17 @@ namespace TelemedicinePlatform.Controllers
                 response.IsError = true;
                 return response;
             }
-            
+
         }
         [HttpGet]
-        public async Task<ActionResult<ApiResponse>> GetDoctors()
+        public async Task<ActionResult<ApiResponse>> GetPatients()
         {
             var response = new ApiResponse();
             try
             {
-                var doctorQuery = _context.Doctors.AsQueryable();
+                var patientQuery = _context.Patients.AsQueryable();
 
-                var doctor = await doctorQuery.ToListAsync();
+                var doctor = await patientQuery.ToListAsync();
                 response.Result = doctor;
                 response.StatusCode = (int)HttpStatusCode.OK;
                 return response;
@@ -66,21 +65,21 @@ namespace TelemedicinePlatform.Controllers
             }
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<ApiResponse>>GetDoctor(int id)
+        public async Task<ActionResult<ApiResponse>> GetPatient(int id)
         {
-            var response= new ApiResponse();
+            var response = new ApiResponse();
             try
             {
-                var doctor = await _context.Doctors.FirstOrDefaultAsync(x => x.DoctorId == id);
-                if(doctor == null)
+                var doctor = await _context.Patients.FirstOrDefaultAsync(x => x.RegistrationId == id);
+                if (doctor == null)
                 {
-                    response.Message = "Doctor not  found";
+                    response.Message = "Patient not  found";
                     response.IsError = true;
                     response.StatusCode = (int)HttpStatusCode.NotFound;
                     return response;
                 }
                 response.Result = doctor;
-                response.Message = "Doctor Data  found";
+                response.Message = "Patient Data  found";
                 response.StatusCode = (int)HttpStatusCode.OK;
                 return response;
             }
@@ -96,15 +95,15 @@ namespace TelemedicinePlatform.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ApiResponse>> PutDoctor(Doctor model)
+        public async Task<ActionResult<ApiResponse>> PutPatient(Patient model)
         {
             var response = new ApiResponse();
             try
             {
-                var dbModel = await _context.Doctors.FirstOrDefaultAsync(x => x.DoctorId == model.DoctorId);
+                var dbModel = await _context.Patients.FirstOrDefaultAsync(x => x.RegistrationId == model.RegistrationId);
                 if (dbModel == null)
                 {
-                    response.Message = "Doctor data not found";
+                    response.Message = "Patient data not found";
                     response.IsError = true;
                     return response;
                 }
@@ -117,7 +116,9 @@ namespace TelemedicinePlatform.Controllers
                 dbModel.ProfilePicture = model.ProfilePicture;
                 dbModel.UserName = model.UserName;
                 dbModel.Password = model.Password;
-                _context.Doctors.Update(dbModel);
+                dbModel.AccountStatus = model.AccountStatus;
+
+                _context.Patients.Update(dbModel);
                 await _context.SaveChangesAsync();
                 response.StatusCode = (int)HttpStatusCode.OK;
                 response.Message = "Doctor Data Updated";
@@ -133,10 +134,10 @@ namespace TelemedicinePlatform.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ApiResponse>>DeleteDoctor(int id)
+        public async Task<ActionResult<ApiResponse>> DeletePatient(int id)
         {
-           var response= new ApiResponse();
-            if (_context.Doctors == null)
+            var response = new ApiResponse();
+            if (_context.Patients == null)
             {
                 response.Message = "No Item Available";
                 response.IsError = true;
@@ -144,15 +145,15 @@ namespace TelemedicinePlatform.Controllers
             }
             try
             {
-                var doctor = await _context.Doctors.FindAsync(id);
-                if(doctor == null)
+                var patient = await _context.Patients.FindAsync(id);
+                if (patient == null)
                 {
-                    response.Message = "Doctor data is not found";
+                    response.Message = "Patient data is not found";
                     response.IsError = true;
                     return response;
                 }
-                _context.Doctors.Remove(doctor);
-                response.Message = "Doctor Data Remove";
+                _context.Patients.Remove(patient);
+                response.Message = "Patient Data Remove";
                 await _context.SaveChangesAsync();
                 response.StatusCode = (int)HttpStatusCode.OK;
                 return response;
@@ -165,5 +166,6 @@ namespace TelemedicinePlatform.Controllers
             }
 
         }
+
     }
 }

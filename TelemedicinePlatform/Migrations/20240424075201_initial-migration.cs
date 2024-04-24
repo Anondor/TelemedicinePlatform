@@ -96,8 +96,9 @@ namespace TelemedicinePlatform.Migrations
                 name: "Services",
                 columns: table => new
                 {
-                    PaymentId = table.Column<int>(type: "int", nullable: false)
+                    ServiceId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    PaymentId = table.Column<int>(type: "int", nullable: false),
                     AppointmentId = table.Column<int>(type: "int", nullable: false),
                     PatientId = table.Column<int>(type: "int", nullable: false),
                     ProofOfPayment = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -105,12 +106,11 @@ namespace TelemedicinePlatform.Migrations
                     processBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
-                    ServiceId = table.Column<int>(type: "int", nullable: false),
                     DoctorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Services", x => x.PaymentId);
+                    table.PrimaryKey("PK_Services", x => x.ServiceId);
                 });
         }
 
