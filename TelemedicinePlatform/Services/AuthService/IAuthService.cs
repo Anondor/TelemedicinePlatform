@@ -1,6 +1,6 @@
 ﻿using TelemedicinePlatform.Models;
 
-namespace TelemedicinePlatform.Servicess.AuthService
+namespace TelemedicinePlatform.Services.AuthService
 {
     public interface IAuthService
     {

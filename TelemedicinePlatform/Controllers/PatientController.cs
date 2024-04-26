@@ -70,7 +70,7 @@ namespace TelemedicinePlatform.Controllers
             var response = new ApiResponse();
             try
             {
-                var doctor = await _context.Patients.FirstOrDefaultAsync(x => x.RegistrationId == id);
+                var doctor = await _context.Patients.FirstOrDefaultAsync(x => x.PatientId == id);
                 if (doctor == null)
                 {
                     response.Message = "Patient not  found";
@@ -100,7 +100,7 @@ namespace TelemedicinePlatform.Controllers
             var response = new ApiResponse();
             try
             {
-                var dbModel = await _context.Patients.FirstOrDefaultAsync(x => x.RegistrationId == model.RegistrationId);
+                var dbModel = await _context.Patients.FirstOrDefaultAsync(x => x.PatientId == model.PatientId);
                 if (dbModel == null)
                 {
                     response.Message = "Patient data not found";

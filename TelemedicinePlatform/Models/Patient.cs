@@ -7,7 +7,7 @@ namespace TelemedicinePlatform.Models
     public class Patient
     {
         [Key]
-        public int RegistrationId { get; set; }
+        public int PatientId { get; set; }
         public string Name { get; set; }
         public string Gender { get; set; }
         public string DateOfBirth { get; set; }

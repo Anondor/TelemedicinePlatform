@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Numerics;
 using TelemedicinePlatform.Models;
-using TelemedicinePlatform.Servicess.AuthService;
+using TelemedicinePlatform.Services.AuthService;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TelemedicinePlatform.Controllers
@@ -21,11 +21,14 @@ namespace TelemedicinePlatform.Controllers
 
 
 
-        public LoginController(APIDbContext context, IConfiguration config, IAuthService authService)
+        public LoginController(APIDbContext context, IConfiguration config,
+            IAuthService authService
+            )
         {
             _context = context;
             _config = config;
-            _authService = authService;
+           _authService = authService;
+       
         }
 
         [HttpPost("Doctor")]

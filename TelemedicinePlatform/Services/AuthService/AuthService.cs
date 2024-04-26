@@ -8,7 +8,7 @@ using System.Text;
 using TelemedicinePlatform.Core;
 using TelemedicinePlatform.Models;
 
-namespace TelemedicinePlatform.Servicess.AuthService
+namespace TelemedicinePlatform.Services.AuthService
 {
     public class AuthService : IAuthService
     {

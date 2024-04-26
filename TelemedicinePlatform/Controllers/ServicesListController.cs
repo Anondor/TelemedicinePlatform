@@ -9,21 +9,21 @@ namespace TelemedicinePlatform.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ServicesController : ControllerBase
+    public class ServicesListController : ControllerBase
     {
         private readonly APIDbContext _context;
-        public ServicesController(APIDbContext context)
+        public ServicesListController(APIDbContext context)
         {
             _context = context;
         }
         [HttpPost]
-        public async Task<ActionResult<ApiResponse>> Save(Services model)
+        public async Task<ActionResult<ApiResponse>> Save(ServicesList model)
         {
             var response = new ApiResponse();
 
             try
             {
-                await _context.Services.AddAsync(model);
+                await _context.ServicesLists.AddAsync(model);
                 await _context.SaveChangesAsync();
 
                 response.StatusCode = (int)HttpStatusCode.OK;
@@ -46,7 +46,7 @@ namespace TelemedicinePlatform.Controllers
             var response =new ApiResponse();
             try
             {
-                var serviceQuery = _context.Services.AsQueryable();
+                var serviceQuery = _context.ServicesLists.AsQueryable();
 
                 var service = await serviceQuery.ToListAsync();
                 response.Result = service;
@@ -70,7 +70,7 @@ namespace TelemedicinePlatform.Controllers
             var response = new ApiResponse();
             try
             {
-                var service = await _context.Services.FirstOrDefaultAsync(x => x.ServiceId == id);
+                var service = await _context.ServicesLists.FirstOrDefaultAsync(x => x.ServiceId == id);
                 if (service == null)
                 {
                     response.Message = "Service not found";
@@ -95,12 +95,12 @@ namespace TelemedicinePlatform.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ApiResponse>> PutService(Services model)
+        public async Task<ActionResult<ApiResponse>> PutService(ServicesList model)
         {
             var response = new ApiResponse();
             try
             {
-                var dbModel = await _context.Services.FirstOrDefaultAsync(x => x.ServiceId == model.ServiceId);
+                var dbModel = await _context.ServicesLists.FirstOrDefaultAsync(x => x.ServiceId == model.ServiceId);
                 if (dbModel == null)
                 {
                     response.Message = "Services data not found";
@@ -116,7 +116,7 @@ namespace TelemedicinePlatform.Controllers
                 dbModel.Status = model.Status;
                 dbModel.Amount = model.Amount;
                 dbModel.DoctorId = model.DoctorId;
-                _context.Services.Update(dbModel);
+                _context.ServicesLists.Update(dbModel);
                 await _context.SaveChangesAsync();
                 response.StatusCode = (int)HttpStatusCode.OK;
                 response.Message = "Services Data Updated";
@@ -134,7 +134,7 @@ namespace TelemedicinePlatform.Controllers
         public async Task<ActionResult<ApiResponse>> DeleteServices(int id)
         {
             var response = new ApiResponse();
-            if (_context.Services == null)
+            if (_context.ServicesLists == null)
             {
                 response.Message = "No Item Available";
                 response.IsError = true;
@@ -142,14 +142,14 @@ namespace TelemedicinePlatform.Controllers
             }
             try
             {
-                var services = await _context.Services.FindAsync(id);
+                var services = await _context.ServicesLists.FindAsync(id);
                 if (services == null)
                 {
                     response.Message = "Services data is not found";
                     response.IsError = true;
                     return response;
                 }
-                _context.Services.Remove(services);
+                _context.ServicesLists.Remove(services);
                 response.Message = "Services Data Remove";
                 await _context.SaveChangesAsync();
                 response.StatusCode = (int)HttpStatusCode.OK;
