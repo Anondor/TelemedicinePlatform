@@ -31,7 +31,7 @@ namespace TelemedicinePlatform.Controllers
        
         }
 
-        [HttpPost("Doctor")]
+        [HttpPost("DoctorLogin")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             /* var response= new ApiResponse();
@@ -120,7 +120,7 @@ namespace TelemedicinePlatform.Controllers
             return result;
         }
 
-        [HttpPost("Patient")]
+        [HttpPost("PatientLogin")]
         public async Task<ActionResult<ApiResponse>> LoginPatien(LoginModel model)
         {
             var response = new ApiResponse();

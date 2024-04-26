@@ -22,6 +22,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<APIDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+
 builder.Services.AddSwaggerGen(setup =>
 {
     // Include 'SecurityScheme' to use JWT Authentication
@@ -49,7 +50,7 @@ builder.Services.AddSwaggerGen(setup =>
     });
 
 });
-
+builder.Services.AddAuthentication(AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme).AddOAuthValidation();
 
 
 var app = builder.Build();
@@ -60,9 +61,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+
 app.UseAuthorization();
 
 app.MapControllers();
