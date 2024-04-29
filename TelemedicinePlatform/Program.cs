@@ -4,6 +4,8 @@ using Microsoft.OpenApi.Models;
 using TelemedicinePlatform;
 using TelemedicinePlatform.Services.AuthService;
 using AspNet.Security.OAuth.Validation;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,7 +51,30 @@ builder.Services.AddSwaggerGen(setup =>
     });
 
 });
-builder.Services.AddAuthentication(OAuthValidationDefaults.AuthenticationScheme).AddOAuthValidation();
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+
+                .AddJwtBearer(cfg =>
+                {
+                    //cfg.Authority = "https://login.microsoftonline.com/0a495c7a-8a56-41c6-bf09-f14ccaf97dfe";
+                    //cfg.Audience = "api://f0f7eef6-41ab-4c71-8b55-79cc2f1871fc"; // Set this to the App ID URL for the web API, which you created when you registered the web API with Azure AD.
+
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = builder.Configuration["Tokens:Issuer"],
+                        ValidAudience = builder.Configuration["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Tokens:key"])),
+                        ValidateIssuerSigningKey = false,
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = false,
+                    };
+
+
+                });
 
 var app = builder.Build();
 
