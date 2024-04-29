@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using TelemedicinePlatform.Filters;
 using TelemedicinePlatform.Models;
 
 namespace TelemedicinePlatform.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [JwtAuthorize]
     public class PatientController : ControllerBase
     {
         private readonly APIDbContext _context;
@@ -70,7 +72,7 @@ namespace TelemedicinePlatform.Controllers
             var response = new ApiResponse();
             try
             {
-                var doctor = await _context.Patients.FirstOrDefaultAsync(x => x.RegistrationId == id);
+                var doctor = await _context.Patients.FirstOrDefaultAsync(x => x.PatientId == id);
                 if (doctor == null)
                 {
                     response.Message = "Patient not  found";
@@ -100,7 +102,7 @@ namespace TelemedicinePlatform.Controllers
             var response = new ApiResponse();
             try
             {
-                var dbModel = await _context.Patients.FirstOrDefaultAsync(x => x.RegistrationId == model.RegistrationId);
+                var dbModel = await _context.Patients.FirstOrDefaultAsync(x => x.PatientId == model.PatientId);
                 if (dbModel == null)
                 {
                     response.Message = "Patient data not found";

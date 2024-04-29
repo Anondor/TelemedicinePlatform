@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TelemedicinePlatform.Models
 {
-    [Table("Services")]
-    public class Services
+    [Table("ServicesList")]
+    public class ServicesList
     {
         [Key]
         public int ServiceId { get; set; }

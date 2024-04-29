@@ -53,7 +53,7 @@ namespace TelemedicinePlatform.Migrations
                 name: "Patient",
                 columns: table => new
                 {
-                    RegistrationId = table.Column<int>(type: "int", nullable: false)
+                    PatientId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -68,7 +68,7 @@ namespace TelemedicinePlatform.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Patient", x => x.RegistrationId);
+                    table.PrimaryKey("PK_Patient", x => x.PatientId);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,7 +93,7 @@ namespace TelemedicinePlatform.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Services",
+                name: "ServicesList",
                 columns: table => new
                 {
                     ServiceId = table.Column<int>(type: "int", nullable: false)
@@ -110,7 +110,7 @@ namespace TelemedicinePlatform.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Services", x => x.ServiceId);
+                    table.PrimaryKey("PK_ServicesList", x => x.ServiceId);
                 });
         }
 
@@ -129,7 +129,7 @@ namespace TelemedicinePlatform.Migrations
                 name: "Payment");
 
             migrationBuilder.DropTable(
-                name: "Services");
+                name: "ServicesList");
         }
     }
 }

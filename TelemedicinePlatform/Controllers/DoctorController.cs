@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TelemedicinePlatform.Models;
 using System.Net;
-
+using Microsoft.AspNetCore.Authorization;
+using TelemedicinePlatform.Filters;
 
 namespace TelemedicinePlatform.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [JwtAuthorize]
     public class DoctorController : ControllerBase
     {
         private readonly APIDbContext _context;

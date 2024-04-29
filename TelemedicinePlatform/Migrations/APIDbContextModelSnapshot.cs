@@ -112,11 +112,11 @@ namespace TelemedicinePlatform.Migrations
 
             modelBuilder.Entity("TelemedicinePlatform.Models.Patient", b =>
                 {
-                    b.Property<int>("RegistrationId")
+                    b.Property<int>("PatientId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RegistrationId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientId"), 1L, 1);
 
                     b.Property<int>("AccountStatus")
                         .HasColumnType("int");
@@ -157,7 +157,7 @@ namespace TelemedicinePlatform.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RegistrationId");
+                    b.HasKey("PatientId");
 
                     b.ToTable("Patient");
                 });
@@ -205,7 +205,7 @@ namespace TelemedicinePlatform.Migrations
                     b.ToTable("Payment");
                 });
 
-            modelBuilder.Entity("TelemedicinePlatform.Models.Services", b =>
+            modelBuilder.Entity("TelemedicinePlatform.Models.ServicesList", b =>
                 {
                     b.Property<int>("ServiceId")
                         .ValueGeneratedOnAdd()
@@ -245,7 +245,7 @@ namespace TelemedicinePlatform.Migrations
 
                     b.HasKey("ServiceId");
 
-                    b.ToTable("Services");
+                    b.ToTable("ServicesList");
                 });
 #pragma warning restore 612, 618
         }
