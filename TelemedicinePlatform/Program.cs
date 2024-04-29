@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.Swagger;
 using TelemedicinePlatform;
 using TelemedicinePlatform.Services.AuthService;
+using AspNet.Security.OAuth.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,8 +49,7 @@ builder.Services.AddSwaggerGen(setup =>
     });
 
 });
-builder.Services.AddAuthentication(AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme).AddOAuthValidation();
-
+builder.Services.AddAuthentication(OAuthValidationDefaults.AuthenticationScheme).AddOAuthValidation();
 
 var app = builder.Build();
 
