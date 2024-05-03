@@ -68,7 +68,7 @@ namespace TelemedicinePlatform.Services.AuthService
                     configuration["Tokens:Issuer"],
                     configuration["Tokens:Audience"],
                     claims,
-                    expires: DateTime.UtcNow.AddHours(1.00),
+                    expires: DateTime.UtcNow.AddDays(5.00),
                     signingCredentials: cred
                     );
                 var results = new
