@@ -12,6 +12,7 @@ namespace TelemedicinePlatform
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<ServicesList> ServicesLists { get;set; }
+        public DbSet<ImageEntity> Images { get; set; }
 
 
 
