@@ -1,12 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace TelemedicinePlatform.Models
+﻿namespace TelemedicinePlatform.Domain.Doctor
 {
-    [Table("Doctor")]
-    public class Doctor
+    public class DoctorDetails
     {
-        [Key]
         public int DoctorId { get; set; }
         public string Name { get; set; }
         public string Gender { get; set; }
@@ -17,7 +12,5 @@ namespace TelemedicinePlatform.Models
         public string ProfilePicture { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-
     }
-
 }

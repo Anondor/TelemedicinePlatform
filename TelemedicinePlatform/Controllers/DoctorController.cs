@@ -6,6 +6,7 @@ using TelemedicinePlatform.Models;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using TelemedicinePlatform.Filters;
+using TelemedicinePlatform.Services.Doctor.Interfaces;
 
 namespace TelemedicinePlatform.Controllers
 {
@@ -15,10 +16,12 @@ namespace TelemedicinePlatform.Controllers
     public class DoctorController : ControllerBase
     {
         private readonly APIDbContext _context;
+        private readonly IDoctorService _doctorService;
 
-        public DoctorController(APIDbContext context)
+        public DoctorController(APIDbContext context, IDoctorService doctorService)
         {
             _context = context;
+            _doctorService = doctorService;
         }
         [HttpPost]
         public async Task<ActionResult<ApiResponse>> Save(Doctor model)
@@ -165,6 +168,26 @@ namespace TelemedicinePlatform.Controllers
                 response.IsError = true;
                 return response;
             }
+
+        }
+
+        [HttpGet("GetdoctorsInfo/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetdoctorsInfo(int id)
+        {
+            var response = new ApiResponse();
+            try
+            {
+                var doctorsInfo =await _doctorService
+
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.IsError = true;
+                return response;
+            }
+
+            return null;
 
         }
     }
